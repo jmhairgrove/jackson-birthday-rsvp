@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jackson's 12th Birthday Party!</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      color: #00d4ff;
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+      margin-bottom: 8px;
+    }
+
+    .hero .subtitle {
+      font-size: 1.3rem;
+      color: #e94560;
+      font-weight: bold;
+    }
+
+    .party-details {
+      max-width: 600px;
+      margin: 30px auto;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .detail-row {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      font-size: 1.1rem;
+    }
+
+    .detail-row:last-child { margin-bottom: 0; }
+
+    .detail-icon {
+      font-size: 1.4rem;
+      margin-right: 14px;
+      min-width: 30px;
+      text-align: center;
+    }
+
+    .detail-label {
+      color: #aaa;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .detail-value {
+      font-weight: 600;
+    }
+
+    .detail-value a {
+      color: #00d4ff;
+      text-decoration: none;
+    }
+
+    .detail-value a:hover { text-decoration: underline; }
+
+    .activities {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 30px auto;
+      max-width: 400px;
+    }
+
+    .activity-card {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 20px 30px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      flex: 1;
+    }
+
+    .activity-card .icon { font-size: 2.5rem; margin-bottom: 8px; }
+    .activity-card .label { font-weight: 600; font-size: 1rem; }
+
+    .spots-banner {
+      text-align: center;
+      margin: 25px auto;
+      max-width: 600px;
+      padding: 14px;
+      background: rgba(233, 69, 96, 0.15);
+      border: 1px solid rgba(233, 69, 96, 0.4);
+      border-radius: 10px;
+      font-size: 0.95rem;
+    }
+
+    .spots-banner strong { color: #e94560; }
+
+    .rsvp-form {
+      max-width: 600px;
+      margin: 30px auto;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .rsvp-form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #00d4ff;
+      font-size: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #777;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #00d4ff;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+    }
+
+    .form-group select option { background: #1a1a2e; }
+
+    .form-group textarea { resize: vertical; min-height: 80px; }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+    }
+
+    .form-row .form-group { flex: 1; }
+
+    .btn-rsvp {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #e94560, #c23152);
+      color: #fff;
+      font-size: 1.15rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: transform 0.15s, box-shadow 0.15s;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-rsvp:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
+    }
+
+    .btn-rsvp:active { transform: translateY(0); }
+
+    .note {
+      text-align: center;
+      margin: 20px auto;
+      max-width: 600px;
+      font-size: 0.85rem;
+      color: #888;
+      padding: 0 20px 40px;
+    }
+
+    /* Confirmation overlay */
+    .confirmation {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .confirmation.show { display: flex; }
+
+    .confirmation-card {
+      background: #16213e;
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      max-width: 420px;
+      margin: 20px;
+      border: 1px solid rgba(0, 212, 255, 0.3);
+    }
+
+    .confirmation-card .check { font-size: 3rem; margin-bottom: 16px; }
+    .confirmation-card h2 { color: #00d4ff; margin-bottom: 12px; }
+    .confirmation-card p { color: #ccc; line-height: 1.6; }
+
+    @media (max-width: 500px) {
+      .hero h1 { font-size: 1.8rem; }
+      .activities { flex-direction: column; gap: 14px; align-items: center; }
+      .activity-card { width: 80%; }
+      .form-row { flex-direction: column; gap: 0; }
+      .party-details, .rsvp-form { margin: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <h1>Jackson's 12th Birthday Bash!</h1>
+    <p class="subtitle">You're Invited!</p>
+  </div>
+
+  <div class="activities">
+    <div class="activity-card">
+      <div class="icon">&#127923;</div>
+      <div class="label">Bowling</div>
+    </div>
+    <div class="activity-card">
+      <div class="icon">&#128299;</div>
+      <div class="label">Laser Tag</div>
+    </div>
+  </div>
+
+  <div class="party-details">
+    <div class="detail-row">
+      <span class="detail-icon">&#128197;</span>
+      <div>
+        <div class="detail-label">Date</div>
+        <div class="detail-value">Friday, April 3, 2026</div>
+      </div>
+    </div>
+    <div class="detail-row">
+      <span class="detail-icon">&#128336;</span>
+      <div>
+        <div class="detail-label">Time</div>
+        <div class="detail-value">6:30 PM</div>
+      </div>
+    </div>
+    <div class="detail-row">
+      <span class="detail-icon">&#128205;</span>
+      <div>
+        <div class="detail-label">Location</div>
+        <div class="detail-value">
+          <a href="https://www.google.com/maps/search/Main+Event+Pelham+Road+Greenville+SC" target="_blank">
+            Main Event — Pelham Road, Greenville, SC
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spots-banner">
+    <strong>Limited Spots!</strong> We have room for <strong>10 kids</strong> — first come, first served. Please RSVP soon to reserve your spot!
+  </div>
+
+  <div class="rsvp-form">
+    <h2>RSVP</h2>
+    <form id="rsvpForm">
+      <div class="form-group">
+        <label for="childName">Child's Name</label>
+        <input type="text" id="childName" name="childName" placeholder="Enter child's name" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="parentName">Parent/Guardian Name</label>
+          <input type="text" id="parentName" name="parentName" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label for="parentPhone">Phone Number</label>
+          <input type="tel" id="parentPhone" name="parentPhone" placeholder="(555) 555-5555" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="parentEmail">Email</label>
+        <input type="email" id="parentEmail" name="parentEmail" placeholder="your@email.com" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="attending">Will you be attending?</label>
+          <select id="attending" name="attending" required>
+            <option value="">-- Select --</option>
+            <option value="yes">Yes, we'll be there!</option>
+            <option value="no">Sorry, can't make it</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="adultsAttending">Adults Attending</label>
+          <select id="adultsAttending" name="adultsAttending">
+            <option value="0">0</option>
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="allergies">Any Allergies or Special Needs?</label>
+        <textarea id="allergies" name="allergies" placeholder="Let us know about any food allergies or anything we should be aware of..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-rsvp">Send RSVP</button>
+    </form>
+  </div>
+
+  <p class="note">
+    Please RSVP by <strong>Wednesday, April 1</strong> so we can plan accordingly. Questions? Reach out to us directly!
+  </p>
+
+  <div class="confirmation" id="confirmation">
+    <div class="confirmation-card">
+      <div class="check">&#127881;</div>
+      <h2>RSVP Received!</h2>
+      <p>Thanks for responding! We'll see you at Main Event on April 3rd for bowling and laser tag. It's going to be a blast!</p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('rsvpForm');
+    const confirmation = document.getElementById('confirmation');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const data = new FormData(form);
+      const rsvp = Object.fromEntries(data.entries());
+
+      // Store RSVP in localStorage as a simple solution
+      const rsvps = JSON.parse(localStorage.getItem('jackson-bday-rsvps') || '[]');
+      rsvp.timestamp = new Date().toISOString();
+      rsvps.push(rsvp);
+      localStorage.setItem('jackson-bday-rsvps', JSON.stringify(rsvps));
+
+      // Show confirmation
+      if (rsvp.attending === 'yes') {
+        confirmation.querySelector('h2').textContent = 'RSVP Received!';
+        confirmation.querySelector('p').textContent =
+          "Thanks for responding! We'll see you at Main Event on April 3rd for bowling and laser tag. It's going to be a blast!";
+      } else {
+        confirmation.querySelector('.check').textContent = '😊';
+        confirmation.querySelector('h2').textContent = 'Thanks for Letting Us Know!';
+        confirmation.querySelector('p').textContent =
+          "We're sorry you can't make it. We'll miss you! Hope to see you next time.";
+      }
+      confirmation.classList.add('show');
+
+      form.reset();
+    });
+
+    confirmation.addEventListener('click', function() {
+      confirmation.classList.remove('show');
+    });
+  </script>
+
+</body>
+</html>
