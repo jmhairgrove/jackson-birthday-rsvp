@@ -306,7 +306,7 @@
   </div>
 
   <div class="spots-banner">
-    <strong>Limited Spots!</strong> We have room for <strong>12 kids</strong> — first come, first served. Please RSVP soon to reserve your spot!
+    <strong>Limited Spots!</strong> We have room for <strong>10 kids</strong> — first come, first served. Please RSVP soon to reserve your spot!
   </div>
 
   <div class="rsvp-form">
@@ -314,37 +314,37 @@
     <form id="rsvpForm">
       <div class="form-group">
         <label for="childName">Child's Name</label>
-        <input type="text" id="childName" name="childName" placeholder="Enter child's name" required>
+        <input type="text" id="childName" name="entry.809190005" placeholder="Enter child's name" required>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="parentName">Parent/Guardian Name</label>
-          <input type="text" id="parentName" name="parentName" placeholder="Your name" required>
+          <input type="text" id="parentName" name="entry.1090669358" placeholder="Your name" required>
         </div>
         <div class="form-group">
           <label for="parentPhone">Phone Number</label>
-          <input type="tel" id="parentPhone" name="parentPhone" placeholder="(555) 555-5555" required>
+          <input type="tel" id="parentPhone" name="entry.1666903223" placeholder="(555) 555-5555" required>
         </div>
       </div>
 
       <div class="form-group">
         <label for="parentEmail">Email</label>
-        <input type="email" id="parentEmail" name="parentEmail" placeholder="your@email.com" required>
+        <input type="email" id="parentEmail" name="entry.436871420" placeholder="your@email.com" required>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="attending">Will you be attending?</label>
-          <select id="attending" name="attending" required>
+          <select id="attending" name="entry.458605259" required>
             <option value="">-- Select --</option>
-            <option value="yes">Yes, we'll be there!</option>
-            <option value="no">Sorry, can't make it</option>
+            <option value="Yes, we'll be there!">Yes, we'll be there!</option>
+            <option value="Sorry, can't make it">Sorry, can't make it</option>
           </select>
         </div>
         <div class="form-group">
           <label for="adultsAttending">Adults Attending</label>
-          <select id="adultsAttending" name="adultsAttending">
+          <select id="adultsAttending" name="entry.1397926878">
             <option value="0">0</option>
             <option value="1" selected>1</option>
             <option value="2">2</option>
@@ -354,7 +354,7 @@
 
       <div class="form-group">
         <label for="allergies">Any Allergies or Special Needs?</label>
-        <textarea id="allergies" name="allergies" placeholder="Let us know about any food allergies or anything we should be aware of..."></textarea>
+        <textarea id="allergies" name="entry.1328777691" placeholder="Let us know about any food allergies or anything we should be aware of..."></textarea>
       </div>
 
       <button type="submit" class="btn-rsvp">Send RSVP</button>
@@ -377,26 +377,28 @@
   <script>
     const form = document.getElementById('rsvpForm');
     const confirmation = document.getElementById('confirmation');
+    const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfZovARKNqZ6cBrQqcSKQgyCGnaHf4cLrsI8gcEHi1GdoIpYA/formResponse';
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
 
       const data = new FormData(form);
-      const rsvp = Object.fromEntries(data.entries());
+      const attending = data.get('entry.458605259');
 
-      // Store RSVP in localStorage as a simple solution
-      const rsvps = JSON.parse(localStorage.getItem('jackson-bday-rsvps') || '[]');
-      rsvp.timestamp = new Date().toISOString();
-      rsvps.push(rsvp);
-      localStorage.setItem('jackson-bday-rsvps', JSON.stringify(rsvps));
+      // Submit to Google Forms
+      fetch(GOOGLE_FORM_URL, {
+        method: 'POST',
+        body: data,
+        mode: 'no-cors'
+      });
 
       // Show confirmation
-      if (rsvp.attending === 'yes') {
+      if (attending === "Yes, we'll be there!") {
         confirmation.querySelector('h2').textContent = 'RSVP Received!';
         confirmation.querySelector('p').textContent =
           "Thanks for responding! We'll see you at Main Event on April 3rd for bowling and laser tag. It's going to be a blast!";
       } else {
-        confirmation.querySelector('.check').textContent = '😊';
+        confirmation.querySelector('.check').innerHTML = '&#128522;';
         confirmation.querySelector('h2').textContent = 'Thanks for Letting Us Know!';
         confirmation.querySelector('p').textContent =
           "We're sorry you can't make it. We'll miss you! Hope to see you next time.";
